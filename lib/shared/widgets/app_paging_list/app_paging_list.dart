@@ -91,7 +91,7 @@ class _AppPagingListState<T> extends State<AppPagingList<T>> {
         );
   }
 
-  int? _getNextPageKey(dynamic state) {
+  int? _getNextPageKey(PagingState<int, T> state) {
     if (widget.onlyOnePage && (state.keys?.length ?? 0) >= 1) {
       return null;
     }
@@ -210,6 +210,7 @@ class _AppPagingListState<T> extends State<AppPagingList<T>> {
       padding: _calculatePadding(),
       builderDelegate: _createBuilderDelegate(),
       separatorBuilder: _createSeparatorBuilder(),
+      cacheExtent: 10000,
     );
   }
 
@@ -252,6 +253,7 @@ class _AppPagingListState<T> extends State<AppPagingList<T>> {
       noMoreItemsIndicatorBuilder:
           widget.noMoreItemsIndicatorBuilder ?? (_) => const SizedBox.shrink(),
       firstPageErrorIndicatorBuilder: _buildErrorIndicator,
+      newPageErrorIndicatorBuilder: _buildNewPageErrorIndicator,
     );
   }
 
@@ -265,6 +267,13 @@ class _AppPagingListState<T> extends State<AppPagingList<T>> {
   Widget _buildErrorIndicator(BuildContext context) {
     if (widget.firstPageErrorIndicatorBuilder != null) {
       return widget.firstPageErrorIndicatorBuilder!(context);
+    }
+    return context.pagingConfigData.errorBuilder(context, null);
+  }
+
+  Widget _buildNewPageErrorIndicator(BuildContext context) {
+    if (widget.newPageErrorIndicatorBuilder != null) {
+      return widget.newPageErrorIndicatorBuilder!(context);
     }
     return context.pagingConfigData.errorBuilder(context, null);
   }

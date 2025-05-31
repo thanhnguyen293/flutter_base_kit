@@ -1,8 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_base_kit/shared/extensions/build_context_x.dart';
-import 'package:flutter_base_kit/shared/widgets/app_paging_list/app_paging_controller.dart';
-import 'package:flutter_base_kit/shared/widgets/read_more_text.dart';
-import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 import 'shared/widgets/app_paging_list/app_paging_list.dart';
 
@@ -51,41 +47,19 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
-      body:  AppPagingList(
-        // pagingController: AppPagingController<int, String>(
-        //   pageSize: 20,
-        //   getNextPageKey: (PagingState<int, dynamic> state) {
-        //     if ((state.items?.length ?? 0) == 0) {
-        //       return null;
-        //     }
-        //     return state.items!.length;
-        //   },
-        //   appFetchPageCallback: (int pageKey, int pageSize) {
-        //     return Future.delayed(
-        //       const Duration(seconds: 1),
-        //           () => List.generate(
-        //         pageSize,
-        //             (index) => 'Item ${pageKey + index + 1}',
-        //       ),
-        //     );
-        //   },
-        // ),
-        pageSize: 10,
+      body: AppPagingList(
+        pageSize: 30,
+        initialOffsetIndex: 1,
         fetchListData: (int offset, int limit) {
+          debugPrint('Fetching data for offset: $offset, limit: $limit');
           return Future.delayed(
-            const Duration(seconds: 1),
-                () => List.generate(
-              limit,
-                  (index) => 'Item ${offset + index + 1}',
-            ),
+            const Duration(milliseconds: 300),
+            () => List.generate(limit, (index) => 'Item ${(offset-1)*limit + index + 1}'),
           );
         },
         itemBuilder: (BuildContext context, String item, int index) {
-          return ListTile(
-            title: Text(item),
-          );
+          return ListTile(title: Text(item));
         },
-
       ),
       // body: SingleChildScrollView(
       //   padding: const EdgeInsets.all(16.0),
