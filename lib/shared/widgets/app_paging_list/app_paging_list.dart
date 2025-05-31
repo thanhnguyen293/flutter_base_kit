@@ -210,7 +210,6 @@ class _AppPagingListState<T> extends State<AppPagingList<T>> {
       padding: _calculatePadding(),
       builderDelegate: _createBuilderDelegate(),
       separatorBuilder: _createSeparatorBuilder(),
-      cacheExtent: 10000,
     );
   }
 
