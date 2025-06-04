@@ -3,9 +3,6 @@ import 'package:flutter_base_kit/shared/widgets/app_paging_list/paging_config.da
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'app_paging_controller.dart';
 
-typedef PagingListFetchDelegate<T> =
-    Future<List<T>> Function(int offset, int limit);
-
 class AppPagingList<T> extends StatefulWidget {
   const AppPagingList({
     required this.itemBuilder,
@@ -41,7 +38,7 @@ class AppPagingList<T> extends StatefulWidget {
   final bool isSliver;
   final int pageSize;
   final ItemWidgetBuilder<T> itemBuilder;
-  final PagingListFetchDelegate<T>? fetchListData;
+  final AppFetchPageCallback<int, T>? fetchListData;
   final IndexedWidgetBuilder? separatorBuilder;
 
   // Indicator builders
@@ -86,7 +83,7 @@ class _AppPagingListState<T> extends State<AppPagingList<T>> {
         widget.pagingController ??
         AppPagingController<int, T>(
           getNextPageKey: _getNextPageKey,
-          appFetchPageCallback: _fetchPageCallback,
+          fetchListData: _fetchPageCallback,
           pageSize: widget.pageSize,
         );
   }
