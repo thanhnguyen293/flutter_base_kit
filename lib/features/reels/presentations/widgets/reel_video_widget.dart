@@ -39,10 +39,10 @@ class ReelItem extends StatelessWidget {
                   child: VideoPlayer(controller!),
                 ),
               ),
-              // Align(
-              //   alignment: Alignment.bottomCenter,
-              //   child: ProcessWidget(controller: controller),
-              // ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: ProcessWidget(controller: controller),
+              ),
             ],
           ],
         ),

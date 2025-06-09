@@ -135,6 +135,19 @@ class _ProcessWidgetState extends State<ProcessWidget> {
     widget.controller!.addListener(_listener);
   }
 
+  @override
+  void didUpdateWidget(covariant ProcessWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.controller != oldWidget.controller) {
+      oldWidget.controller!.removeListener(_listener);
+      widget.controller!.addListener(_listener);
+      setState(() {
+        duration = widget.controller!.value.duration;
+        position = widget.controller!.value.position;
+      });
+    }
+  }
+
   void _listener() {
     setState(() {
       position = widget.controller!.value.position;
