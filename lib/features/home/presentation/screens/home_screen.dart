@@ -1,5 +1,6 @@
 import '../../../../project_imports.dart';
 
+@RoutePage()
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
